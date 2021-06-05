@@ -9,6 +9,7 @@
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
 
+    <!--servlet上下文-->
     <context-param>
         <param-name>encoding</param-name>
         <param-value>UTF-8</param-value>

@@ -1,4 +1,4 @@
-package com.javacto.action;
+package com.javacto.action.query;
 
 import com.javacto.service.PhoneService;
 import com.javacto.service.PhoneServiceImpl;
@@ -27,8 +27,8 @@ public class QueryPhoneAction extends HttpServlet {
 
         PhoneService phoneService = new PhoneServiceImpl();
         List<Object> list = new ArrayList<Object>();
-        list = phoneService.queryAll();
 
+        list = phoneService.queryAll();
         req.setAttribute("Phones",list);
         req.getRequestDispatcher("/successPhone.jsp").forward(req,resp);
     }

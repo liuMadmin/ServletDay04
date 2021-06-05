@@ -1,7 +1,7 @@
-package com.javacto.action;
+package com.javacto.action.login;
 
-import com.javacto.service.PhoneService;
-import com.javacto.service.PhoneServiceImpl;
+import com.javacto.service.ComputerService;
+import com.javacto.service.ComputerServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/loginPhone.do")
-public class LoginPhoneAction extends HttpServlet {
+@WebServlet("/loginComputer.do")
+public class LoginComputerAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -25,16 +25,16 @@ public class LoginPhoneAction extends HttpServlet {
         req.setCharacterEncoding(encoding);
         resp.setContentType("text/html;charset="+encoding);
 
-        String phoneName = req.getParameter("phoneName");
+        String cName = req.getParameter("cName");
 
-        PhoneService phoneService = new PhoneServiceImpl();
+        ComputerService computerService = new ComputerServiceImpl();
         List<Object> list = new ArrayList<Object>();
-        list = phoneService.queryPhoneByName(phoneName);
+
+        list = computerService.queryComputerByName(cName);
         if (list.size()==0){
             req.getRequestDispatcher("/fail.jsp").forward(req,resp);
         }else {
-            req.getRequestDispatcher("/queryPhone.do").forward(req,resp);
-
+            req.getRequestDispatcher("/queryComputer.do").forward(req,resp);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.javacto.action;
+package com.javacto.action.query;
 
 import com.javacto.service.DogService;
 import com.javacto.service.DogServiceImpl;
@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/loginDog.do")
-public class LoginDogAction extends HttpServlet {
+@WebServlet("/queryDog.do")
+public class QueryDogAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -25,15 +25,11 @@ public class LoginDogAction extends HttpServlet {
         req.setCharacterEncoding(encoding);
         resp.setContentType("text/html;charset="+encoding);
 
-        String dogName = req.getParameter("dogName");
-
         DogService dogService = new DogServiceImpl();
         List<Object> list = new ArrayList<Object>();
-        list = dogService.queryDogByName(dogName);
-        if (list.size()==0){
-            req.getRequestDispatcher("/fail.jsp").forward(req,resp);  //请求转发不能加路径,重定向必须要带工程名
-        }else {
-            req.getRequestDispatcher("/queryDog.do").forward(req,resp);
-        }
+
+        list = dogService.queryAll();
+        req.setAttribute("Dogs",list);
+        req.getRequestDispatcher("/successDog.jsp").forward(req,resp);
     }
 }

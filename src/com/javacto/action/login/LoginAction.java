@@ -1,4 +1,4 @@
-package com.javacto.action;
+package com.javacto.action.login;
 /*
 * 控制层     调用业务层的方法
 * */
@@ -24,9 +24,6 @@ import java.util.Set;
 @WebServlet("/loginUser.do")
 public class LoginAction extends HttpServlet {
 
-    UserService userService = new UserServiceImpl();
-    HashMap<String,String> hashMap = new HashMap<String,String>();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -40,6 +37,9 @@ public class LoginAction extends HttpServlet {
 
         String userName = req.getParameter("userName");
         String pwd = req.getParameter("pwd");
+
+        UserService userService = new UserServiceImpl();
+        HashMap<String,String> hashMap = new HashMap<String,String>();
 
         hashMap = userService.queryUserNP();
         Set<String> keySet = hashMap.keySet();

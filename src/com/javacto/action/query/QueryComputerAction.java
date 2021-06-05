@@ -1,7 +1,7 @@
-package com.javacto.action;
+package com.javacto.action.query;
 
-import com.javacto.service.UserService;
-import com.javacto.service.UserServiceImpl;
+import com.javacto.service.ComputerService;
+import com.javacto.service.ComputerServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/queryAll.do")
-public class QueryAllAction extends HttpServlet {
-
+@WebServlet("/queryComputer.do")
+public class QueryComputerAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -26,12 +25,11 @@ public class QueryAllAction extends HttpServlet {
         req.setCharacterEncoding(encoding);
         resp.setContentType("text/html;charset="+encoding);
 
+        ComputerService computerService = new ComputerServiceImpl();
         List<Object> list = new ArrayList<Object>();
 
-        UserService userService = new UserServiceImpl();
-        list = userService.queryAll2();
-
-        req.setAttribute("users",list);
-        req.getRequestDispatcher("/success.jsp").forward(req,resp);
+        list = computerService.queryAll();
+        req.setAttribute("Computers",list);
+        req.getRequestDispatcher("/successComputer.jsp").forward(req,resp);
     }
 }

@@ -1,7 +1,7 @@
-package com.javacto.action;
+package com.javacto.action.login;
 
-import com.javacto.service.DogService;
-import com.javacto.service.DogServiceImpl;
+import com.javacto.service.PhoneService;
+import com.javacto.service.PhoneServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/queryDog.do")
-public class QueryDogAction extends HttpServlet {
+@WebServlet("/loginPhone.do")
+public class LoginPhoneAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -25,11 +25,17 @@ public class QueryDogAction extends HttpServlet {
         req.setCharacterEncoding(encoding);
         resp.setContentType("text/html;charset="+encoding);
 
-        DogService dogService = new DogServiceImpl();
-        List<Object> list = new ArrayList<Object>();
-        list = dogService.queryAll();
+        String phoneName = req.getParameter("phoneName");
 
-        req.setAttribute("Dogs",list);
-        req.getRequestDispatcher("/successDog.jsp").forward(req,resp);
+        PhoneService phoneService = new PhoneServiceImpl();
+        List<Object> list = new ArrayList<Object>();
+
+        list = phoneService.queryPhoneByName(phoneName);
+        if (list.size()==0){
+            req.getRequestDispatcher("/fail.jsp").forward(req,resp);
+        }else {
+            req.getRequestDispatcher("/queryPhone.do").forward(req,resp);
+
+        }
     }
 }

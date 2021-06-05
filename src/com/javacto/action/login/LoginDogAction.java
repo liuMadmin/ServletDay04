@@ -1,7 +1,7 @@
-package com.javacto.action;
+package com.javacto.action.login;
 
-import com.javacto.service.ComputerService;
-import com.javacto.service.ComputerServiceImpl;
+import com.javacto.service.DogService;
+import com.javacto.service.DogServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/loginComputer.do")
-public class LoginComputerAction extends HttpServlet {
+@WebServlet("/loginDog.do")
+public class LoginDogAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doPost(req,resp);
@@ -25,15 +25,16 @@ public class LoginComputerAction extends HttpServlet {
         req.setCharacterEncoding(encoding);
         resp.setContentType("text/html;charset="+encoding);
 
-        String cName = req.getParameter("cName");
+        String dogName = req.getParameter("dogName");
 
-        ComputerService computerService = new ComputerServiceImpl();
+        DogService dogService = new DogServiceImpl();
         List<Object> list = new ArrayList<Object>();
-        list = computerService.queryComputerByName(cName);
+
+        list = dogService.queryDogByName(dogName);
         if (list.size()==0){
-            req.getRequestDispatcher("/fail.jsp").forward(req,resp);
+            req.getRequestDispatcher("/fail.jsp").forward(req,resp);  //请求转发不能加路径,重定向必须要带工程名
         }else {
-            req.getRequestDispatcher("/queryComputer.do").forward(req,resp);
+            req.getRequestDispatcher("/queryDog.do").forward(req,resp);
         }
     }
 }
