@@ -10,7 +10,14 @@
 <script type="application/javascript"></script>
 <html>
 <head>
-    <title>Success</title>
+    <title>SuccessQuery</title>
+    <script>
+        function submitForm(inputSbq) {
+            var form = inputSbq.parentNode;
+            form.action="${pageContext.request.contextPath}/deleteUser";
+            form.submit();
+        }
+    </script>
 </head>
 <body>
     <h1 style="text-align: center;color: green">登录成功</h1>
@@ -23,7 +30,7 @@
                 <td>sex</td>
                 <td>birthday</td>
                 <td>address</td>
-                <td>操作</td>
+                <td>删除</td>
             </tr>
             <c:forEach items="${users}" var="user">
                 <tr align="center">
@@ -36,7 +43,15 @@
                     <%--下面这2种写法 传递的参数在地址栏是可见的  不安全--%>
                     <%--<td><a href="${pageContext.request.contextPath}/deleteUser?id=${user.id}&userName=${user.name}">删除</a> </td>--%>
                     <%--<td><a href="javascript:window.location='${pageContext.request.contextPath}/deleteUser?id=${user.id}&userName=${user.name}'">删除</a></td>--%>
-                    <td><a href="delete.jsp?id=${user.id}&userName=${user.name}">删除</a></td>
+                    <%--这种可隐藏参数--%>
+                    <%--<td><a href="delete.jsp?id=${user.id}&userName=${user.name}">删除</a></td>--%>
+                    <td>
+                        <form id="deleteForm" method="post">
+                            <input type="text" style="display: none" value="${user.id}" name="id">
+                            <input type="text" style="display: none" value="${user.name}" name="name">
+                            <input type="button" style="background-color: red" value="删除" onclick="submitForm(this)">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
